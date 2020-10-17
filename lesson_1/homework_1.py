@@ -26,7 +26,7 @@ for categories in categories_json:
         'products' : data['results'],
     }
     with open( f'categories/{categories["parent_group_name"]}.json', 'w', encoding='UTF-8') as file_json_of_category:
-        json.dump(output, file_json_of_category)
+        json.dump(output, file_json_of_category, ensure_ascii=False)
 
 # class Parser5ka:
 #     def __init__(self, start_url):
