@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from datetime import datetime
 from pymongo import MongoClient
+from time import sleep
 
 # response = requests.get(url)
 # soup = BeautifulSoup(response.text, 'lxml')
@@ -70,17 +71,31 @@ class MagnitParser:
             except Exception:
                 product[key] = None
         product['promo_name'] = (product['promo_name']).split('\n')[1]
-        product['old_price'] = float(((product['old_price']).split('\n')[1]) + '.' + (product['old_price']).split('\n')[2])
-        product['new_price'] = float(
-            ((product['new_price']).split('\n')[1]) + '.' + (product['new_price']).split('\n')[2])
+        try:
+            product['old_price'] = float(
+                ((product['old_price']).split('\n')[1]) + '.' + (product['old_price']).split('\n')[2])
+        except Exception:
+            product['old_price'] = None
+        try:
+            product['new_price'] = float(
+                ((product['new_price']).split('\n')[1]) + '.' + (product['new_price']).split('\n')[2])
+        except Exception:
+            product['new_price'] = None
         product['date_from'] = datetime(year=2020,
                                         month=(months_to_digit[(product['date_from']).split(' ')[3]]),
                                         day=int((product['date_from']).split(' ')[2]))
         product['date_to'] = datetime(year=2020,
                                       month=(months_to_digit[((product['date_to']).split(' ')[6])[:-1]]),
                                       day=(int((product['date_to']).split(' ')[5])))
+        try:
+            product['image_url'] = self._url[0] + '://' + self._url[1] + product_soup.find(
+                'img', attrs={'class':'action__image'})['data-src']
+        except Exception:
+            product['image_url'] = None
+        #   product_soup.find('img', attrs={'class':'action__image'})['data-src']
         # month=(months_to_digit[(product['date_from']).split(' ')[3]])
         # product_soup.findChild('img', attrs={'alt':product['product_name']})
+        sleep(0.5)
         return product
 
     def save_to(self, product_data):
