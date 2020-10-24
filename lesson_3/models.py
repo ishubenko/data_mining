@@ -11,6 +11,13 @@ from sqlalchemy import (
 
 Base = declarative_base()
 
+# tag_post = Table(
+#     'tag_post',
+#     Base.metadata,
+#     Column('post_id', Integer, ForeignKey('post_id')),
+#     Column('tag_id', Integer, ForeignKey('tag_id'))
+# )
+
 class Post(Base):
     __tablename__ = 'post'
     id = Column(Integer, autoincrement=True, primary_key=True)
@@ -18,6 +25,7 @@ class Post(Base):
     img_url = Column(String, unique=False, nullable=True,)
     writer_id = Column(Integer, ForeignKey('writer.id'))
     writer = relationship('Writer', back_populates='posts')
+    # tag = relationship('Tag', secondary=tag_post, back_populates='posts')
 
 class Writer(Base):
     __tablename__ = 'writer'
@@ -26,5 +34,9 @@ class Writer(Base):
     url = Column(String, unique=True, nullable=False)
     posts = relationship('Post', back_populates='writer')
 
-
-print('ok')
+# class Tag(Base):
+#     __tablename__ = 'tag'
+#     id = Column(Integer, autoincrement=True, primary_key=True)
+#     name = Column(String, unique=False, nullable=False, )
+#     url = Column(String, unique=True, nullable=False)
+#     posts = relationship('Post', secondary=tag_post)

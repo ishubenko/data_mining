@@ -32,6 +32,7 @@ class GeekBrainsParser:
         var_page = self.page
         # _url_page = self.start_url + '?page=' + str(self.var_page)
         soup = self._get_soup(self.start_url)
+
         while soup.find('div', attrs={'class':'post-items-wrapper'}).text:
             # soup = self._get_soup(_url_page)
             block_div_with_posts = soup.find('div', attrs={'class':'post-items-wrapper'})
@@ -50,19 +51,37 @@ class GeekBrainsParser:
 
     def save_to_sqlite(self, output_data):
         db = self.SessionMaker()
-        insert_author = models.Writer(
-            name = output_data['author'],
-            url = output_data['author_url']
-        )
+        try:
+            insert_author = models.Writer(
+                name = output_data['author'],
+                url = output_data['author_url']
+            )
+        except Exception:
+            var_query = db.query(models.Writer.id).filter(models.Writer.url == output_data['author_url'])
+            insert_author = var_query[0][0]
+
         insert_post = models.Post(
             url = output_data['post_url'],
             img_url = output_data['image_url'],
             writer = insert_author
         )
         db.add(insert_author, insert_post)
+        # try:
+        #     db.commit()
+        # except Exception:
+        #     db.rollback()
+        #     var_query = db.query(models.Writer.id).filter(models.Writer.url == output_data['author_url'])
+        #     # db.query(models.Writer.id).filter(models.Writer.url == )
+        #     insert_post = models.Post(
+        #         url=output_data['post_url'],
+        #         img_url=output_data['image_url'],
+        #         writer= var_query[0][0] # ID автора, который уже есть в базе
+        #     )
+        #     db.add(insert_post)
         db.commit()
+        var = 555
         db.close()
-        pass
+        # pass
 
     def post_parse(self, post_url):
         soup_page = self._get_soup(post_url)
