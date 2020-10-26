@@ -79,7 +79,7 @@ class GeekBrainsParser:
         #     )
         #     db.add(insert_post)
         db.commit()
-        var = 555
+        # var = 555
         db.close()
         # pass
 
