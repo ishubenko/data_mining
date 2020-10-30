@@ -16,7 +16,7 @@ class YoulaSpider(scrapy.Spider):
         'characteristics':'//div[@class="AdvertCard_specs__2FEHc"]//div[contains(@data-target,"advert-info-")]//text()',
         'description_full': '//div[contains(@data-target, "advert-info-descriptionFull")]/text()'
     }
-    db_client = MongoClient()
+    db_client = MongoClient('mongodb://localhost:27017')
 
     def parse(self, response, **kwargs):
         for url in response.xpath(self.xpath['brands']):
@@ -45,7 +45,7 @@ class YoulaSpider(scrapy.Spider):
         name = response.xpath(self.xpath['name']).extract_first()
         images = response.xpath(self.xpath['images']).extract()
         characteristics = response.xpath(self.xpath['characteristics']).extract()
-        description_full = response.xpath(self.xpath['description_full'])
+        description_full = response.xpath(self.xpath['description_full']).extract()
         author = self.js_decoder_author(response)
 
         # save to mongo
