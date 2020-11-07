@@ -6,10 +6,10 @@
 import scrapy
 
 
-# class GbparsItem(scrapy.Item):
-#     # define the fields for your item here like:
-#     # name = scrapy.Field()
-#     pass
+class GbparsItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    pass
 
 class HHVacancyItem(scrapy.Item):
     _id = scrapy.Field()
@@ -26,3 +26,16 @@ class HHEmployerItem(scrapy.Item):
     web_adress = scrapy.Field()
     field_of_activity = scrapy.Field()
     description = scrapy.Field()
+
+class Insta(scrapy.Item):
+    _id = scrapy.Field()
+    date_parse = scrapy.Field()
+    data = scrapy.Field()
+    img = scrapy.Field()
+
+class InstaTag(Insta):
+    pass
+
+
+class InstaPost(Insta):
+    pass

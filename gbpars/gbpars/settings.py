@@ -12,6 +12,8 @@ BOT_NAME = 'gbpars'
 SPIDER_MODULES = ['gbpars.gbpars.spiders']
 NEWSPIDER_MODULE = 'gbpars.gbpars.spiders'
 
+IMAGES_STORE = 'images'
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:81.0) Gecko/20100101 Firefox/81.0'
@@ -63,7 +65,8 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'gbpars.gbpars.pipelines.GbparsPipeline': 300,
+    'gbpars.gbpars.pipelines.GbparsPipeline': 300,
+    'gbpars.gbpars.pipelines.GbparsImagesPipeline': 200,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
