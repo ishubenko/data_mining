@@ -16,7 +16,7 @@ class YoulaSpider(scrapy.Spider):
         'characteristics':'//div[@class="AdvertCard_specs__2FEHc"]//div[contains(@data-target,"advert-info-")]//text()',
         'description_full': '//div[contains(@data-target, "advert-info-descriptionFull")]/text()'
     }
-    db_client = MongoClient('mongodb://localhost:27017')
+    # db_client = MongoClient('mongodb://localhost:27017')
 
     def parse(self, response, **kwargs):
         for url in response.xpath(self.xpath['brands']):
@@ -49,16 +49,23 @@ class YoulaSpider(scrapy.Spider):
         author = self.js_decoder_author(response)
 
         # save to mongo
-        collection = self.db_client['parse_10'][self.name]
-        collection.insert_one(
-            {'title': name,
+        # collection = self.db_client['parse_10'][self.name]
+        # collection.insert_one(
+        #     {'title': name,
+        #     'images': images,
+        #     'specifications': specifications,
+        #     # 'characteristics': characteristics,
+        #     'description': description_full,
+        #     'author': author,
+        #     }
+        # )
+        yield {'title': name,
             'images': images,
             'specifications': specifications,
             # 'characteristics': characteristics,
             'description': description_full,
             'author': author,
             }
-        )
 
     def js_decoder_author(self, response):
         script = response.xpath('//script[contains(text(), "window.transitState =")]/text()').get()
