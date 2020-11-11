@@ -5,21 +5,12 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
 from gbpars.gbpars import settings
 
-from youla import YoulaSpider
-from insta import InstaSpider
-from hh import HHSpider
+# from youla import YoulaSpider
+# from insta import InstaSpider
+from insta_users import InstaSpiderUsers
+# from hh import HHSpider
 
 from gbpars.gbpars import pipelines
-
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-# def print_hi(name):
-#     # Use a breakpoint in the code line below to debug your script.
-#     print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
 
 load_dotenv('.env')
 
@@ -29,5 +20,6 @@ if __name__ == '__main__':
     crawl_proc = CrawlerProcess(settings=crawl_settings)
     # crawl_proc.crawl(YoulaSpider)
     # crawl_proc.crawl(HHSpider)
-    crawl_proc.crawl(InstaSpider, login=os.getenv('USERNAME'), enc_password=os.getenv('ENC_PASSWORD'))
+    # crawl_proc.crawl(InstaSpider, login=os.getenv('USERNAME'), enc_password=os.getenv('ENC_PASSWORD'))
+    crawl_proc.crawl(InstaSpiderUsers, login=os.getenv('USERNAME'), enc_password=os.getenv('ENC_PASSWORD'))
     crawl_proc.start()
