@@ -24,7 +24,7 @@ class InstaKursach(scrapy.Spider):
         script = response.xpath('//script[contains(text(), "window._sharedData =")]/text()').get()
         return json.loads(script.replace('window._sharedData = ', '')[:-1])
 
-    def auth(self, response, **kwargs):
+    def parse(self, response, **kwargs):
         try:
             js_data = self.js_data_extract(response)
             yield scrapy.FormRequest(

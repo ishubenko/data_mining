@@ -7,7 +7,8 @@ from gbpars.gbpars import settings
 
 # from youla import YoulaSpider
 # from insta import InstaSpider
-from insta_users import InstaSpiderUsers
+# from insta_users import InstaSpiderUsers
+from kursach import InstaKursach
 # from hh import HHSpider
 
 from gbpars.gbpars import pipelines
@@ -21,5 +22,6 @@ if __name__ == '__main__':
     # crawl_proc.crawl(YoulaSpider)
     # crawl_proc.crawl(HHSpider)
     # crawl_proc.crawl(InstaSpider, login=os.getenv('USERNAME'), enc_password=os.getenv('ENC_PASSWORD'))
-    crawl_proc.crawl(InstaSpiderUsers, login=os.getenv('USERNAME'), enc_password=os.getenv('ENC_PASSWORD'))
+    # crawl_proc.crawl(InstaSpiderUsers, login=os.getenv('USERNAME'), enc_password=os.getenv('ENC_PASSWORD'))
+    crawl_proc.crawl(InstaKursach, login=os.getenv('USERNAME'), enc_password=os.getenv('ENC_PASSWORD'))
     crawl_proc.start()
