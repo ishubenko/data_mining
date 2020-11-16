@@ -30,7 +30,7 @@ class HHEmployerItem(scrapy.Item):
 class Insta(scrapy.Item):
     _id = scrapy.Field()
     date_parse = scrapy.Field()
-    data = scrapy.Field()
+    # data = scrapy.Field()
     # img = scrapy.Field()
 
 class InstaTag(Insta):
@@ -50,3 +50,16 @@ class InstaFollow(scrapy.Item):
     insta_user_id = scrapy.Field()
     follow_name = scrapy.Field()
     follow_id = scrapy.Field()
+
+class InstaFriends(scrapy.Item):
+    _id = scrapy.Field()
+    date_parse = scrapy.Field()
+
+    insta_user_name_1 = scrapy.Field()
+    insta_user_name_2 = scrapy.Field()
+    number_of_hops = scrapy.Field()
+    chain_of_friends = scrapy.Field()
+
+class TemporaryInfo(scrapy.Item):
+    insta_user_name_1 = scrapy.Field()
+    list_of_friends = scrapy.Field()
